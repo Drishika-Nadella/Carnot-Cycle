@@ -158,26 +158,44 @@
         T2 = P3*v3/R;
         eta1 = (1 - (T2/T1));
 
-        //ab 1st
+        //ab 1st Isothermal Heat Addition
         for(i=v1;i<=v2;i=i+0.01) {
-            datapoints1.push({x: i, y: (P1*v1) / i});
+            if (i===v1) {
+                datapoints1.push({x: i, y: (P1*v1) / i, indexLabel: "1", indexLabelBackgroundColor: "yellow"});
+            }
+            else {
+                datapoints1.push({x: i, y: (P1 * v1) / i});
+            }
         }
 
-        //bc 2nd
-        //for(j = Math.pow(T2/T1, 1/(gamma-1))*v2; j<=v2; j++) {
+        //bc 2nd Isentropic Expansion
         for(j=v2; j<=v3; j=j+0.01){
-            datapoints2.push({x: j, y: P2*Math.pow(v2, gamma)/Math.pow(j,gamma)});
+            if (j===v2) {
+                datapoints2.push({x: j, y: P2*Math.pow(v2, gamma)/Math.pow(j,gamma), indexLabel: "2", indexLabelBackgroundColor: "yellow"});
+            }
+            else {
+                datapoints2.push({x: j, y: P2 * Math.pow(v2, gamma) / Math.pow(j, gamma)});
+            }
         }
 
-        //cd 3rd
-        for(k=v4; k<=v3; k=k+0.01){
-            datapoints3.push({ x: k, y: (P3*v3)/k });
+        //cd 3rd Isothermal Heat Removal
+        for(k=v3; k>=v4; k=k-0.01){
+            if (k===v3) {
+                datapoints3.push({ x: k, y: (P3*v3)/k, indexLabel: "3", indexLabelBackgroundColor: "yellow" });
+            }
+            else {
+                datapoints3.push({x: k, y: (P3 * v3) / k});
+            }
         }
 
-        //da 4th
-        //for(m=2; m<=Math.pow(T1/T2, 1/(gamma-1))*v1; m++){
-        for(m=v1; m<=v4; m=m+0.01){
-            datapoints4.push({ x: m , y: P1*Math.pow(v1, gamma)/Math.pow(m,gamma)});
+        //da 4th Isentropic Compression
+        for(m=v4; m>=v1; m=m-0.01){
+            if (m===v4) {
+                datapoints4.push({ x: m , y: P1*Math.pow(v1, gamma)/Math.pow(m,gamma), indexLabel: "4", indexLabelBackgroundColor: "yellow"});
+            }
+            else {
+                datapoints4.push({ x: m , y: P1*Math.pow(v1, gamma)/Math.pow(m,gamma)});
+            }
         }
 
         var data = [];
@@ -187,6 +205,7 @@
             showInLegend: true,
             name: "Isothermal Heat Addition",
             markerSize: 1,
+            toolTipContent: "<strong>P</strong>: {y}, <strong>V</strong>: {x}",
             dataPoints: datapoints1
         })
 
@@ -196,6 +215,7 @@
             showInLegend: true,
             name: "Isentropic Expansion",
             markerSize: 1,
+            toolTipContent: "<strong>P</strong>: {y}, <strong>V</strong>: {x}",
             dataPoints: datapoints2
         })
         data.push({
@@ -204,6 +224,7 @@
             showInLegend: true,
             name: "Isothermal Heat Removal",
             markerSize: 1,
+            toolTipContent: "<strong>P</strong>: {y}, <strong>V</strong>: {x}",
             dataPoints: datapoints3
         })
         data.push({
@@ -212,6 +233,7 @@
             showInLegend: true,
             name: "Isentropic Compression",
             markerSize: 1,
+            toolTipContent: "<strong>P</strong>: {y}, <strong>V</strong>: {x}",
             dataPoints: datapoints4
         })
 
@@ -230,9 +252,9 @@
         document.getElementById("p6").innerHTML = "V<sub>2</sub> = " + v2.toFixed(2) + " m³";
         document.getElementById("p7").innerHTML = "V<sub>3</sub> = " + v3.toFixed(2) + " m³";
         document.getElementById("p8").innerHTML = "V<sub>4</sub> = " + v4.toFixed(2) + " m³";
-        document.getElementById("p9").innerHTML = "Q<sub>1</sub> = " + Q1.toFixed(2) + " J";
-        document.getElementById("p10").innerHTML = "W = " + W.toFixed(2) + " J";
-        document.getElementById("p11").innerHTML = "Q<sub>2</sub> = " + Q2.toFixed(2) + " J";
+        document.getElementById("p9").innerHTML = "Q<sub>1</sub> = " + Q1.toFixed(2) + " kJ";
+        document.getElementById("p10").innerHTML = "W = " + W.toFixed(2) + " kJ";
+        document.getElementById("p11").innerHTML = "Q<sub>2</sub> = " + Q2.toFixed(2) + " kJ";
         document.getElementById("p12").innerHTML = "Efficiency = " + eta.toFixed(2) + "";
     }
     function varinit()
